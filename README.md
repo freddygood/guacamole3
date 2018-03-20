@@ -32,7 +32,8 @@ As a bonus there is a docker-compose manifest. It has its own files that replace
 
 ### directory layout
 
-```|- docker-compose   - manifests for docker-compose, it must be run from this directory
+```
+|- docker-compose   - manifests for docker-compose, it must be run from this directory
 |- files            - all files for images building
 |  |- master
 |   \ slave
@@ -51,13 +52,15 @@ As a bonus there is a docker-compose manifest. It has its own files that replace
 
 All command are started from the root directory of the repo:
 
-```git clone git@github.com:freddygood/guacamole3.git
+```
+git clone git@github.com:freddygood/guacamole3.git
 cd guacamole3
 ```
 
 ### prepare virtual server
 
-```vagrant up
+```
+vagrant up
 make prepare
 ```
 
@@ -69,7 +72,8 @@ Those tasks perform the following:
 
 ### create and run jenkins containers
 
-```make create
+```
+make create
 ```
 
 This task performs the following:
@@ -88,21 +92,25 @@ These tasks are started after the master starts:
 
 ### delete all created resource
 
-```make clean
+```
+make clean
 ```
 
 This task stop and destroy containers, images, network and volumes.
 
 ### prune all unused docker resources
 
-`make prune`
+```
+make prune
+```
 
 ### bonus
 
 All docker compose related files are in a separate directory because compose doesn't support templating and inventory.
 To build and spin up containers with compose run the command:
 
-```cd docker-compose
+```
+cd docker-compose
 docker-compose up
 ```
 
