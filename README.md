@@ -122,7 +122,7 @@ make up prepare create
 
 Access jenkins via http://127.0.0.1:8181 with credentials provided
 
-When everything is finish
+When everything is finished
 
 ```
 make clean prune destroy
