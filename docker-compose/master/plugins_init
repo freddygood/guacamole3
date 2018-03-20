@@ -1,3 +1,4 @@
-git:latest
+git
 ssh-slaves
 ssh-credentials
+pipeline
