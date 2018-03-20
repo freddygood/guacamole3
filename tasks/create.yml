@@ -96,9 +96,7 @@
   - name: display result information
     debug:
       msg:
-        - "To access Jenkins CI open the link 'http://{{ ansible_ssh_host }}:{{ jenkins_port }}/' in a browse"
-        - "To log in as an adminstrator use credentials:"
+        - "To access Jenkins CI open the link 'http://{{ ansible_ssh_host }}:{{ jenkins_port }}/' in a browser"
+        - "Log in as an adminstrator with the credentials:"
         - "  login: {{ jenkins_admin_username }}"
         - "  password: {{ jenkins_admin_password }}"
-
-
