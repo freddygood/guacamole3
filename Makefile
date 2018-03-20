@@ -5,7 +5,7 @@ up:
 	vagrant up
 
 destroy:
-	vagrant destroy
+	vagrant destroy -f
 
 prepare:
 	ansible-galaxy install -p roles -r requirements.yml
