@@ -93,6 +93,8 @@ These tasks are started after the master starts:
 - create SSH credentials for slaves
 - register and launch slaves
 
+The task can take up to 10 minutes because it install plugins and dependencies.
+
 ### Delete all created resource
 
 ```
@@ -123,7 +125,7 @@ Access jenkins via http://127.0.0.1:8181 with credentials provided
 When everything is finish
 
 ```
-make prune clean destroy
+make clean prune destroy
 ```
 
 ### Bonus
