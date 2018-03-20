@@ -44,19 +44,22 @@ As a bonus there is a docker-compose manifest. It has its own files that replace
 |
 |- Makefile         - make based tasks
 |- requirements.yml - requirements for local roles installation
-|- Vagrantfile      - manifest for vagrant machine```
+|- Vagrantfile      - manifest for vagrant machine
+```
 
 ### checkout and run scripts
 
 All command are started from the root directory of the repo:
 
 ```git clone git@github.com:freddygood/guacamole3.git
-cd guacamole3```
+cd guacamole3
+```
 
 ### prepare virtual server
 
 ```vagrant up
-make prepare```
+make prepare
+```
 
 Those tasks perform the following:
 
@@ -66,7 +69,7 @@ Those tasks perform the following:
 
 ### create and run jenkins containers
 
-```make create```
+`make create`
 
 This task performs the following:
 
@@ -84,13 +87,13 @@ These tasks are started after the master starts:
 
 ### delete all created resource
 
-```make clean```
+`make clean`
 
 This task stop and destroy containers, images, network and volumes.
 
 ### prune all unused docker resources
 
-```make prune```
+`make prune`
 
 ### bonus
 
@@ -98,7 +101,8 @@ All docker compose related files are in a separate directory because compose doe
 To build and spin up containers with compose run the command:
 
 ```cd docker-compose
-docker-compose up```
+docker-compose up
+```
 
 ### good to be done
 
