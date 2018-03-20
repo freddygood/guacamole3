@@ -69,7 +69,8 @@ Those tasks perform the following:
 
 ### create and run jenkins containers
 
-`make create`
+```make create
+```
 
 This task performs the following:
 
@@ -87,7 +88,8 @@ These tasks are started after the master starts:
 
 ### delete all created resource
 
-`make clean`
+```make clean
+```
 
 This task stop and destroy containers, images, network and volumes.
 
