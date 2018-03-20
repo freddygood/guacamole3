@@ -1,6 +1,12 @@
 
 export ANSIBLE_HOST_KEY_CHECKING=False
 
+up:
+	vagrant up
+
+destroy:
+	vagrant destroy
+
 prepare:
 	ansible-galaxy install -p roles -r requirements.yml
 	ansible-playbook -i inventory/vagrant.py tasks/prepare.yml

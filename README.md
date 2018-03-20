@@ -61,7 +61,7 @@ cd guacamole3
 ### Prepare virtual server
 
 ```
-vagrant up
+make up
 make prepare
 ```
 
@@ -115,9 +115,7 @@ Create machine and spin up containers
 git clone git@github.com:freddygood/guacamole3.git
 cd guacamole3
 
-vagrant up
-make prepare
-make create
+make up prepare create
 ```
 
 Access jenkins via http://127.0.0.1:8181 with credentials provided
@@ -125,9 +123,7 @@ Access jenkins via http://127.0.0.1:8181 with credentials provided
 When everything is finish
 
 ```
-make prune
-make clean
-vagrant destroy
+make prune clean destroy
 ```
 
 ### Bonus
