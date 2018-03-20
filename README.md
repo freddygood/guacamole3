@@ -1,6 +1,6 @@
 # guacamole3
 
-### prerequisites
+### Prerequisites
 
 Requirements:
 
@@ -10,6 +10,7 @@ Requirements:
 
 Completing the task I used ansible-galaxy roles `geerlingguy.docker` and `geerlingguy.pip` and some scripts from the repo https://github.com/jenkinsci/docker
 
+All images are built by ansible and based on ubuntu xenial as the requirement was not to use pre-built image
 All containers are started inside a vagrant virtual machine.
 All jenkins data are consistent and are outside containers.
 Slaves are connected over SSH.
@@ -21,7 +22,7 @@ What the script does:
 - create images from Dockerfiles for master and slave nodes
 - create network and volumes
 - run one master and two slave nodes
-- update admin password
+- update admin password as required
 - install required plugins
 - create SSH credentials for slaves
 - install public keys into slaves
@@ -30,7 +31,7 @@ What the script does:
 
 As a bonus there is a docker-compose manifest. It has its own files that replace ansible templates and inventory.
 
-### directory layout
+### Directories layout
 
 ```
 |- docker-compose   - manifests for docker-compose, it must be run from this directory
@@ -48,7 +49,7 @@ As a bonus there is a docker-compose manifest. It has its own files that replace
 |- Vagrantfile      - manifest for vagrant machine
 ```
 
-### checkout and run scripts
+### Checkout and run scripts
 
 All command are started from the root directory of the repo:
 
@@ -57,7 +58,7 @@ git clone git@github.com:freddygood/guacamole3.git
 cd guacamole3
 ```
 
-### prepare virtual server
+### Prepare virtual server
 
 ```
 vagrant up
@@ -67,10 +68,11 @@ make prepare
 Those tasks perform the following:
 
 - spin up vagrant machine
+- forward port 8181
 - install python and pip
 - install docker
 
-### create and run jenkins containers
+### Create and run jenkins containers
 
 ```
 make create
@@ -82,6 +84,7 @@ This task performs the following:
 - create docker volumes
 - create docker network
 - spin up docker containers
+- display connecting information
 
 These tasks are started after the master starts:
 
@@ -90,7 +93,7 @@ These tasks are started after the master starts:
 - create SSH credentials for slaves
 - register and launch slaves
 
-### delete all created resource
+### Delete all created resource
 
 ```
 make clean
@@ -98,13 +101,36 @@ make clean
 
 This task stop and destroy containers, images, network and volumes.
 
-### prune all unused docker resources
+### Prune all unused docker resources
 
 ```
 make prune
 ```
 
-### bonus
+### Collect everything together
+
+Create machine and spin up containers
+
+```
+git clone git@github.com:freddygood/guacamole3.git
+cd guacamole3
+
+vagrant up
+make prepare
+make create
+```
+
+Access jenkins via http://127.0.0.1:8181 with credentials provided
+
+When everything is finish
+
+```
+make prune
+make clean
+vagrant destroy
+```
+
+### Bonus
 
 All docker compose related files are in a separate directory because compose doesn't support templating and inventory.
 To build and spin up containers with compose run the command:
