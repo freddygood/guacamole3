@@ -35,11 +35,8 @@
       state: absent
     with_items:
       - master_workdir
-      - master_logs
       - slave1_workdir
-      - slave1_logs
       - slave2_workdir
-      - slave2_logs
 
   - name: deleting jenkins data init volume (dirty hack)
     shell: docker volume rm -f init0
