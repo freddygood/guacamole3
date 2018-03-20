@@ -1,0 +1,51 @@
+---
+
+- name: preparing docker containers
+  hosts: all
+  become: yes
+
+  tasks:
+
+  - name: deleting jenkins slave containers
+    docker_container:
+      name: "{{ item }}"
+      state: absent
+    with_items:
+      - slave1
+      - slave2
+      - master
+
+  - name: deleting docker network
+    docker_network:
+      name: jenkins
+      state: absent
+
+#   dirty hack due PR https://github.com/ansible/ansible/pull/36638 is not released
+  - name: getting docker volume list (dirty hack)
+    shell: docker volume ls -q
+    register: init_volume_list
+
+  - name: create jenkins data init volumes (dirty hack)
+    shell: docker volume create init0
+    when: init_volume_list.stdout == ''
+
+  - name: deleting jenkins data volumes
+    docker_volume:
+      name: "{{ item }}"
+      state: absent
+    with_items:
+      - master_workdir
+      - master_logs
+      - slave1_workdir
+      - slave1_logs
+      - slave2_workdir
+      - slave2_logs
+
+  - name: deleting jenkins data init volume (dirty hack)
+    shell: docker volume rm -f init0
+    when: init_volume_list.stdout == ''
+
+  - name: waiting for master is up
+    wait_for:
+      port: "{{ jenkins_port }}"
+      state: stopped

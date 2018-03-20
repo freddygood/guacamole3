@@ -1,0 +1,21 @@
+---
+
+- name: preparing server
+  hosts: all
+  gather_facts: no
+  become: yes
+  vars:
+    pip_install_packages:
+      - name: docker-py
+
+  pre_tasks:
+
+  - name: installing python
+    raw: sudo apt-get -y install python-simplejson
+
+  - name: gathering facts
+    setup:
+
+  roles:
+    - ../roles/geerlingguy.pip
+    - ../roles/geerlingguy.docker

@@ -1,0 +1,60 @@
+---
+
+version: "3.2"
+
+services:
+  master:
+    image: jenkins_master:latest
+    build:
+      context: master
+    networks:
+      jenkins:
+        aliases:
+          - master
+    volumes:
+      - type: volume
+        source: master_workdir
+        target: /var/lib/jenkins
+    ports:
+      - target: 8181
+        published: 8181
+        protocol: tcp
+        mode: host
+
+  slave1:
+    image: jenkins_slave:latest
+    build:
+      context: slave
+    depends_on:
+      - master
+    networks:
+      jenkins:
+        aliases:
+          - slave1
+    volumes:
+      - type: volume
+        source: slave1_workdir
+        target: /var/lib/jenkins
+
+  slave2:
+    image: jenkins_slave:latest
+    build:
+      context: slave
+    depends_on:
+      - master
+    networks:
+      jenkins:
+        aliases:
+          - slave2
+    volumes:
+      - type: volume
+        source: slave2_workdir
+        target: /var/lib/jenkins
+
+networks:
+  jenkins:
+
+volumes:
+  master_workdir:
+  slave1_workdir:
+  slave2_workdir:

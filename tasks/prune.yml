@@ -1,0 +1,16 @@
+---
+
+- name: prune all components
+  hosts: all
+  gather_facts: no
+  become: yes
+  tasks:
+
+  - name: "prune stale components"
+    shell: "docker {{ item }} prune -f"
+    register: rc
+    with_items:
+      - container
+      - volume
+      - network
+      - image

@@ -1,0 +1,104 @@
+---
+
+- name: preparing docker containers
+  hosts: all
+  become: yes
+  tasks:
+
+  - name: creating docker context directories
+    file:
+      name: "{{ item }}"
+      state: directory
+    with_items:
+      - master
+      - slave
+
+  - name: copy docker master files
+    template:
+      src: "{{ item }}"
+      dest: "master/"
+    with_fileglob:
+      - ../files/master/*
+
+  - name: copy docker slave files
+    template:
+      src: "{{ item }}"
+      dest: "slave/"
+    with_fileglob:
+      - ../files/slave/*
+
+  - name: create docker images
+    docker_image:
+      name: "jenkins_{{ item }}"
+      tag: latest
+      path: "{{ item }}"
+      force: yes
+    with_items:
+      - master
+      - slave
+
+  - name: creating docker network
+    docker_network:
+      name: jenkins
+
+#   dirty hack due PR https://github.com/ansible/ansible/pull/36638 is not released
+  - name: getting docker volume list (dirty hack)
+    shell: docker volume ls -q
+    register: init_volume_list
+
+  - name: create jenkins data init volumes (dirty hack)
+    shell: docker volume create init0
+    when: init_volume_list.stdout == ''
+
+  - name: create jenkins data volumes
+    docker_volume:
+      name: "{{ item }}"
+    with_items:
+      - master_workdir
+      - slave1_workdir
+      - slave2_workdir
+
+  - name: deleting jenkins data init volume (dirty hack)
+    shell: docker volume rm -f init0
+    when: init_volume_list.stdout == ''
+
+  - name: run jenkins master container
+    docker_container:
+      name: "{{ item }}"
+      image: jenkins_master:latest
+      networks:
+        - name: jenkins
+      ports:
+        "{{ jenkins_port }}:{{ jenkins_port }}"
+      volumes:
+        - "{{ item }}_workdir:/var/lib/jenkins"
+    with_items:
+      - master
+
+  - name: run jenkins slave containers
+    docker_container:
+      name: "{{ item }}"
+      image: jenkins_slave:latest
+      networks:
+        - name: jenkins
+      volumes:
+        - "{{ item }}_workdir:/var/lib/jenkins"
+      env:
+        JENKINS_AGENT_NAME: "{{ item }}"
+    with_items:
+      - slave1
+      - slave2
+
+  - name: waiting for master is up
+    wait_for:
+      port: "{{ jenkins_port }}"
+
+  - name: display result information
+    debug:
+      msg:
+        - "To access Jenkins CI open the link 'http://{{ ansible_ssh_host }}:{{ jenkins_port }}/' in a browse"
+        - "To log in as an adminstrator use credentials:"
+        - "  login: {{ jenkins_admin_username }}"
+        - "  password: {{ jenkins_admin_password }}"
+
+

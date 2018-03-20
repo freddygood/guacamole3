@@ -1,0 +1,18 @@
+---
+
+jenkins_user: jenkins
+jenkins_group: jenkins
+jenkins_uid: 1000
+jenkins_gid: 1000
+jenkins_version: 2.107.1
+jenkins_port: 8181
+jenkins_home: /var/lib/jenkins
+jenkins_url: https://repo.jenkins-ci.org/public/org/jenkins-ci/main/jenkins-war/{{ jenkins_version }}/jenkins-war-{{ jenkins_version }}.war
+
+jenkins_agent_home: /var/lib/jenkins
+jenkins_agent_key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7TXXfwuGN7B2fVAR2BYSs4MEZ4lRDilueY9wqaxxttkYWF/zot2O6AdEX99tW7w4NNjEh6m3TR5k45LYeB9q8ECWVrQXR6FagRB2MKJAVEUGCZs8MCYTNLKQVKyWdTrPa8rsJ4dTVLCw7MOp6uioQILvBG1hADb4IZ9qncKXKavCNN5ALpchtGE3f8WlVPjzt/leqDguyU4CwSzVCJbyGyW0ouOOYJUkNxoxFigU9BhP+m6nzoLI/CKkKpmLGU36LdO2u1zH21NUp4nrfUdyNlJRbHXFTp+ibNf6vN0YM0xnhg+SEsdFfRhPLnScqLguRBMqOfp3kX1V1Jvt0hpj3
+jenkins_agent_credentials: jenkins-slave-key
+jenkins_agent_executors: 2
+
+jenkins_admin_username: Adnymics
+jenkins_admin_password: 1234
