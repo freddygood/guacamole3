@@ -128,8 +128,9 @@ make prune clean destroy
 
 ### Bonus
 
-All docker compose related files are in a separate directory because compose doesn't support templating and inventory.
-To build and spin up containers with compose run the command:
+All docker-compose related files are in a separate directory because compose doesn't support templating and inventory.
+Docker must be installed and run locally.
+To build images and spin up containers with compose run the command:
 
 ```
 cd docker-compose
